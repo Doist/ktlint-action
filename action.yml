@@ -1,0 +1,22 @@
+name: 'Ktlint'
+description: 'Runs ktlint on changed files.'
+inputs:
+  version:
+    description: 'Ktlint version.'
+    required: false
+    default: '0.38.1'
+  args:
+    description: 'Ktlint arguments.'
+    required: false
+    default: ''
+  target:
+    description: 'Target to compare against.'
+    required: false
+    default: 'HEAD~1'
+runs:
+  using: 'composite'
+  steps: 
+    - shell: sh
+      run: curl -sSLO https://github.com/pinterest/ktlint/releases/download/${{ inputs.version }}/ktlint && chmod a+x ktlint
+    - shell: sh
+      run: git diff --name-only ${{ inputs.target }} | grep '\.kt[s"]\?$' | xargs ./ktlint ${{ inputs.args }} .
