@@ -18,7 +18,7 @@ jobs:
       - name: Fetch dev branch
         run: git fetch origin dev
       - name: Run ktlint against dev
-        uses: Doist/GithubActionKtlint@master
+        uses: Doist/ktlint-action@master
         with:
           args: "--android --relative"
           target: "origin/dev"
